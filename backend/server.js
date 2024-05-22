@@ -1,6 +1,8 @@
+import dotenv from 'dotenv';
 const express = require('express');
 const app = express();
 
+dotenv.config();
 app.get('/', (req, res)=>{
     res.status(200).send("Checking")
 })
