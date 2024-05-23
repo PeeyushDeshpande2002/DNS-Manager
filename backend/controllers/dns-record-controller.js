@@ -8,11 +8,6 @@ AWS.config.update({
 });
 
 var route53 = new AWS.Route53();
-route53.listHostedZones({}, function (err, data) {
-  if (!err) {
-    console.log(data);
-  }
-});
 
 export const getHostedZones = async (req, res) => {
     try {

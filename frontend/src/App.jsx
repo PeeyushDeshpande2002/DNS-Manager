@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Navbar from './components/Navbar';
+import DnsRecordDashboard from './components/DnsRecordDashboard';
 // import AddRecord from './components/AddRecord';
 // import EditRecord from './components/EditRecord';
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/:hostedZoneId" element={<DnsRecordDashboard />} />
           {/* <Route path="/add" element={<AddRecord />} />
           <Route path="/edit/:id" element={<EditRecord />} /> */}
         </Routes>

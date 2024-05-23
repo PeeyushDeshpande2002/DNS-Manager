@@ -13,7 +13,7 @@ export const getDomains = async(req, res, next) => {
     try {
         const domains = await route53.listHostedZones().promise();
         console.log(domains);
-        return res.status(200).json({domains : domains.HostedZones})
+        return res.status(200).json(domains.HostedZones)
     } catch (error) {
         next(error)
     }
@@ -49,7 +49,7 @@ export const createHostedZone = async (req,res)=>{
       const {hostedZoneId} = req.params
       console.log('id- ',req.params)
       const params = {
-        Id: hostedZoneId, // The ID of the hosted zone to be deleted
+        Id: hostedZoneId, 
       };
       const result = await route53.deleteHostedZone(params).promise();
       console.log('Hosted zone deleted:', hostedZoneId);
