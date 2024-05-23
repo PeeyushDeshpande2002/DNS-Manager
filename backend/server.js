@@ -4,6 +4,7 @@ import { connectDB } from "./db.js";
 import express from "express";
 import authRouter from "./routers/auth-router.js";
 import { errorMiddleware } from "./middleware/error-middleware.js";
+import domainRouter from "./routers/domain-router.js";
 const app = express();
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.static("storage"));
 
 app.use(express.json());
 app.use("/api/auth", authRouter);
+app.use("/api/domains", domainRouter);
 app.use(errorMiddleware);
 
 const port = 5000;
