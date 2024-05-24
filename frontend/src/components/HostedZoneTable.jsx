@@ -38,9 +38,10 @@ export default function HostedZoneTable() {
       React.useEffect(()=>{
         getDomains();
     }, []);
-    const handleClick = (id) =>{
-      const hostedZoneId = extractZoneId(id);
-      navigate(`/dashboard/${hostedZoneId}`)
+    const handleClick = (row) =>{
+      console.log(row);
+      const hostedZoneId = extractZoneId(row.Id);
+      navigate( `/dashboard/${hostedZoneId}`, { state: { hostedZone: row }} )
     }
   return ( 
     <TableContainer component={Paper}>
@@ -68,7 +69,7 @@ export default function HostedZoneTable() {
               <TableCell align="right">{row.ResourceRecordSetCount}</TableCell>
               <TableCell align="right">{row.Config.Comment}</TableCell>
               <TableCell align="right">{row.Id}</TableCell>
-              <TableCell align="right"><Button onClick={()=>handleClick(row.Id)}>Open</Button></TableCell>   
+              <TableCell align="right"><Button onClick={()=>handleClick(row)}>Open</Button></TableCell>   
             </TableRow>
           ))}
         </TableBody>

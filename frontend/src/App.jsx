@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material';
-import Home from './components/Home';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Dashboard from './components/Dashboard';
-import Navbar from './components/Navbar';
-import DnsRecordDashboard from './components/DnsRecordDashboard';
+import Login from './page/Login';
+import Home from './page/Home';
+import Signup from './page/Signup';
+import Dashboard from './page/Dashboard';
+import Navbar from './page/Navbar';
+import DnsRecordDashboard from './page/DnsRecordDashboard';
 // import AddRecord from './components/AddRecord';
 // import EditRecord from './components/EditRecord';
 

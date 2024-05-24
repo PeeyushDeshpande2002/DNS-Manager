@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import HostedZoneTable from '../pages/HostedZoneTable.jsx'
-import { Button } from '@mui/material';
+import HostedZoneTable from '../components/HostedZoneTable.jsx'
+import { Box, Button } from '@mui/material';
 import DomainModal from '../modals/CreateHostedZoneModal.jsx';
 
 const Dashboard = ({}) => {
@@ -31,13 +31,22 @@ const Dashboard = ({}) => {
     }
   };
   return (
-    <div>
-      <Button variant="contained" color="primary" onClick={handleOpenModal}>
+    <Box>
+      <h1>Hosted Zones</h1>
+       <Box 
+      display="flex" 
+      justifyContent="center" 
+      alignItems="center"  
+      sx={{ backgroundColor: '#f5f5f5' }}
+    >
+      <Box display={'flex'}  flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
+      <HostedZoneTable/>
+      <Button sx={{marginTop : '25px', marginBottom : '25px'}} variant="contained" color="primary" onClick={handleOpenModal}>
        Create Hosted Zone
       </Button>
       <DomainModal open={openModal} handleClose={handleCloseModal} handleSubmit={handleAddDomain} />
-      <HostedZoneTable/>
-    </div>
+      </Box>
+      </Box></Box>
   )
 }
 
