@@ -43,6 +43,9 @@ const Signup = () => {
         setPhone('');
         navigate("/login");
       } 
+      else{
+        toast.error(res_data.errorDetails ? res_data.errorDetails : res_data.message);
+      }
     } catch (error) {
       //console.log(error);
       toast.error('Error while signing up')  

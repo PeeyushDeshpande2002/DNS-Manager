@@ -49,7 +49,9 @@ const Login = () => {
         setPassword('');
         navigate("/dashboard");
 
-      } 
+      } else{
+        toast.error(res_data.errorDetails ? res_data.errorDetails : res_data.message);
+      }
     } catch (error) {
       toast.error(error.messsage)
     }
@@ -81,10 +83,6 @@ const Login = () => {
           required
           onChange={(e)=>setPassword(e.target.value)}
           value={password}
-        />
-        <FormControlLabel
-          control={<Checkbox name="checkedB" color="primary" />}
-          label="Remember me"
         />
         <Button
           type="submit"
