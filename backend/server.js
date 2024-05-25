@@ -10,7 +10,7 @@ const app = express();
 
 dotenv.config();
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://dns-manager-1-fgyh.onrender.com",
   methods: "POST, GET, PUT, PATCH, HEAD, DELETE",
   credentials: true,
 };
