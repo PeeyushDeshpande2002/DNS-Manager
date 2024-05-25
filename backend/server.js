@@ -22,6 +22,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/domains", domainRouter);
 app.use("/api/dns", dnsRecordRouter);
+
 app.use(errorMiddleware);
 
 const port = 5000;

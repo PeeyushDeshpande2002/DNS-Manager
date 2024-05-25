@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const URI ="mongodb://0.0.0.0:27017/DNS_manager"
+const URI ="mongodb+srv://deshppd2002:tHmv27wj4SKspHGq@dns-manager.0trjfrw.mongodb.net/"
 
 export const connectDB = async() =>{
     try {
