@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../store/auth';
 
 function createData(name, type, records, HostZoneID, Comment) {
   return { name, type, records, HostZoneID, Comment };
@@ -15,7 +16,9 @@ function createData(name, type, records, HostZoneID, Comment) {
 
 
 export default function HostedZoneTable() {
+
     const [rows, setRows] = React.useState();
+    const {AuthorizationToken} = useAuth();
     const extractZoneId = (id) => {
       const parts = id.split('/');
       return parts[2];
@@ -24,7 +27,10 @@ export default function HostedZoneTable() {
     const getDomains = async () => {
         try {
             const response = await fetch('http://localhost:5000/api/domains/allDomains', {
-                method : 'GET'
+                method : 'GET',
+                headers : {
+                  Authorization : AuthorizationToken,
+                }
             })
             if(response.ok){
                 const data = await response.json();

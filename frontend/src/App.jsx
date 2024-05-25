@@ -7,8 +7,7 @@ import Signup from './page/Signup';
 import Dashboard from './page/Dashboard';
 import Navbar from './page/Navbar';
 import DnsRecordDashboard from './page/DnsRecordDashboard';
-// import AddRecord from './components/AddRecord';
-// import EditRecord from './components/EditRecord';
+import { Logout } from './page/Logout';
 
 const App = () => {
   return (
@@ -18,11 +17,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/:hostedZoneId" element={<DnsRecordDashboard />} />
-          {/* <Route path="/add" element={<AddRecord />} />
-          <Route path="/edit/:id" element={<EditRecord />} /> */}
         </Routes>
       </Container>
     </Router>

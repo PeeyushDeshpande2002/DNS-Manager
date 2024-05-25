@@ -60,8 +60,24 @@ export const updateDnsRecord = async (req, res) => {
     const { id } = req.params;
     const { oldRecord, newRecord } = req.body;
     console.log("update - ", req.body);
-    
+    if (oldRecord.Type !== "SOA") {
       const params = {
+        HostedZoneId: id,
+        ChangeBatch: {
+          Changes: [
+            {
+              Action: "DELETE",
+              ResourceRecordSet: {
+                Name: oldRecord.Name,
+                Type: oldRecord.Type,
+                TTL: oldRecord.TTL,
+                ResourceRecords: oldRecord.ResourceRecords
+              },
+            },
+          ],
+        },
+      };
+      const newparams = {
         HostedZoneId: id,
         ChangeBatch: {
           Changes: [
@@ -76,9 +92,11 @@ export const updateDnsRecord = async (req, res) => {
             },
           ],
         }}
-      await route53.changeResourceRecordSets(params).promise();
+        await route53.changeResourceRecordSets(params).promise();
+      await route53.changeResourceRecordSets(newparams).promise();
+
       res.json({ message: "DNS record updated successfully" });
-  } catch (error) {
+  }} catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }

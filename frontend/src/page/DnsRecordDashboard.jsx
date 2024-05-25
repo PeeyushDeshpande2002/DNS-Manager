@@ -4,10 +4,12 @@ import { Box, Button } from '@mui/material'
 import CreateRecordModal from '../modals/CreateRecordModal.jsx'
 import { useLocation, useParams } from 'react-router-dom'
 import { HostedZoneDetails } from '../components/HostedZoneDetails.jsx'
+import { useAuth } from '../store/auth.jsx'
 
 const DnsRecordDashboard = () => {
   const location = useLocation();
   const { hostedZone } = location.state;
+  const {AuthorizationToken} = useAuth();
   // console.log(location.state);
   const [modalOpen, setModalOpen] = useState(false);
   const {hostedZoneId} = useParams();
@@ -23,7 +25,10 @@ const DnsRecordDashboard = () => {
   const getDomains = async () => {
     try {
         const response = await fetch('http://localhost:5000/api/domains/allDomains', {
-            method : 'GET'
+            method : 'GET',
+            headers : {
+              Authorization : AuthorizationToken,
+            }
         })
         if(response.ok){
             const data = await response.json();
@@ -40,6 +45,7 @@ const DnsRecordDashboard = () => {
     const response = await fetch(`http://localhost:5000/api/dns/hostedzone/${hostedZoneId}/createDns`, {
       method : 'POST',
       headers : {
+        Authorization : AuthorizationToken,
         'Content-Type' : 'application/json',
       },
       body : JSON.stringify(recordData)

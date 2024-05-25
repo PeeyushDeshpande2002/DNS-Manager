@@ -1,8 +1,29 @@
 import React from 'react';
 import { Box, Button, Typography, Paper, Grid, Divider } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAuth } from '../store/auth';
 
 export const HostedZoneDetails = ({ hostedZone }) => {
-    console.log(hostedZone);
+  const { hostedZoneId } =  useParams();
+  const navigate = useNavigate();
+  const {AuthorizationToken} = useAuth();
+  const handleDeleteHostedZone = async() => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/domains/delete/${hostedZoneId}`, {
+        method : 'DELETE',
+        headers : {
+          Authorization : AuthorizationToken,
+        }
+      })
+      if(response.ok){
+        const data = await response.json();
+        console.log(data);
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Paper elevation={3} sx={{ padding: 3, marginTop : '80px' }}>
       <Box mb={3}>
@@ -33,11 +54,8 @@ export const HostedZoneDetails = ({ hostedZone }) => {
         </Grid>
       </Box>
       <Box display="flex" justifyContent="flex-end">
-        <Button variant="outlined" sx={{ mr: 2 }}>
+        <Button onClick={handleDeleteHostedZone} variant="outlined" sx={{ mr: 2 }}>
           Delete zone
-        </Button>
-        <Button variant="contained" color="primary">
-          Edit hosted zone
         </Button>
       </Box>
     </Paper>

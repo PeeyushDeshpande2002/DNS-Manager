@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import HostedZoneTable from '../components/HostedZoneTable.jsx'
 import { Box, Button } from '@mui/material';
 import DomainModal from '../modals/CreateHostedZoneModal.jsx';
+import { useAuth } from '../store/auth.jsx';
 
 const Dashboard = ({}) => {
   const [openModal, setOpenModal] = useState();
+  const {AuthorizationToken} = useAuth();
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -18,6 +20,7 @@ const Dashboard = ({}) => {
       const response = await fetch('http://localhost:5000/api/domains/create', {
         method : 'POST',
         headers : {
+          Authorization : AuthorizationToken,
           'Content-Type' : 'application/json'
         },
         body : JSON.stringify(domainData)
@@ -25,6 +28,7 @@ const Dashboard = ({}) => {
       if(response.ok){
         console.log('Adding domain:', domainData);
         handleCloseModal();
+        <HostedZoneTable/>
       }
     } catch (error) {
       console.log(error);

@@ -9,16 +9,21 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import EditRecordModal from '../modals/EditRecordModal';
+import {useAuth} from '../store/auth.jsx'
 
 export default function DNSRecordTable() {
     const [rows, setRows] = useState();
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [currentRecord, setCurrentRecord] = useState(null);
     const { hostedZoneId } = useParams();
+    const {AuthorizationToken} = useAuth()
     const getDNSRecords = async () => {
         try {
             const response = await fetch(`http://localhost:5000/api/dns/hostedzone/${hostedZoneId}`, {
-                method : 'GET'
+                method : 'GET',
+                headers : {
+                  Authorization : AuthorizationToken,
+                }
             })
             if(response.ok){
                 const data = await response.json();

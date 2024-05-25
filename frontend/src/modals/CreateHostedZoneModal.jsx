@@ -19,7 +19,7 @@ const DomainModal = ({ open, handleClose, handleSubmit }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     handleSubmit({ domainName, description });
-    setDomain('');
+    setDomainName('');
     setDescription('');
   };
 
