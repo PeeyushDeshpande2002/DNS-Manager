@@ -5,6 +5,7 @@ import CreateRecordModal from '../modals/CreateRecordModal.jsx'
 import { useLocation, useParams } from 'react-router-dom'
 import { HostedZoneDetails } from '../components/HostedZoneDetails.jsx'
 import { useAuth } from '../store/auth.jsx'
+import { toast } from 'react-toastify'
 
 const DnsRecordDashboard = () => {
   const location = useLocation();
@@ -13,7 +14,7 @@ const DnsRecordDashboard = () => {
   // console.log(location.state);
   const [modalOpen, setModalOpen] = useState(false);
   const {hostedZoneId} = useParams();
-  console.log(hostedZoneId);
+  //console.log(hostedZoneId);
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -34,7 +35,8 @@ const DnsRecordDashboard = () => {
             const data = await response.json();
         }
     } catch (error) {
-        console.log(error);
+        //console.log(error);
+        toast.error(error)
     }
   }
   useEffect(()=>{
@@ -52,10 +54,12 @@ const DnsRecordDashboard = () => {
     })
     if(response.ok){
       const data = response.json();
-      console.log(data);
+      //console.log(data);
+      toast.success('Created record successfully')
     }
    } catch (error) {
-    console.log(error);
+    //console.log(error);
+    toast.error('Error while creating record')
    }
     // console.log('Record Data:', recordData);
   };
@@ -72,7 +76,7 @@ const DnsRecordDashboard = () => {
         handleClose={handleCloseModal}
         handleSubmit={handleCreateRecord}
       />
-      
+
       </Box>
     </div>
   )

@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Paper, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SnackbarNotification from "../components/Snackbar";
+import {toast} from "react-toastify";
 const URL = `https://dns-manager-g5md.onrender.com/api/auth/register`;
 const Signup = () => {
   const paperStyle = {
@@ -11,7 +11,6 @@ const Signup = () => {
     margin: "20px auto",
   };
   const btnstyle = { margin: "8px 0" };
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
@@ -37,23 +36,19 @@ const Signup = () => {
       //console.log("res form server", res_data);
 
       if (response.ok) {
-        setSnackbar({ open: true, message: 'Signed up successfully!', severity: 'success' });
+        toast.success("Signed up successfully")
         setUsername('');
         setEmail('');
         setPassword('');
         setPhone('');
         navigate("/login");
-      } else {
-        setSnackbar({ open: true, message: 'Error while signing up!', severity: 'error' });  
-      }
+      } 
     } catch (error) {
       //console.log(error);
-      setSnackbar({ open: true, message: 'Error while signing up!', severity: 'error' });  
+      toast.error('Error while signing up')  
     }
   };
-  const handleClose = () => {
-    setSnackbar({ ...snackbar, open: false });
-  };
+ 
   return (
     <div>
       <Box marginTop={15}>
@@ -114,12 +109,6 @@ const Signup = () => {
           >
             Sign in
           </Button>
-          <SnackbarNotification
-        open={snackbar.open}
-        handleClose={handleClose}
-        severity={snackbar.severity}
-        message={snackbar.message}
-      />
         </Paper>
       </Box>
     </div>

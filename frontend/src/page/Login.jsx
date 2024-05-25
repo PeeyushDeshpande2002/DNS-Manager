@@ -12,7 +12,7 @@ import {
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
-import SnackbarNotification from "../components/Snackbar";
+import {toast} from 'react-toastify'
 
 const URL = "https://dns-manager-g5md.onrender.com/api/auth/login";
 const Login = () => {
@@ -28,7 +28,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -44,7 +43,7 @@ const Login = () => {
       //console.log("response data", res_data);
       if (response.ok) {
         //console.log(email, password);
-        setSnackbar({ open: true, message: 'Logged in successfully!', severity: 'success' });
+        toast.success('Logged in successfully')
         storeTokenInLS(res_data.token);
         setEmail('');
         setPassword('');
@@ -52,12 +51,10 @@ const Login = () => {
 
       } 
     } catch (error) {
-      setSnackbar({ open: true, message: 'Check your email and password!', severity: 'error' });  
+      toast.error(error.messsage)
     }
   };
-  const handleClose = () => {
-    setSnackbar({ ...snackbar, open: false });
-  };
+  
   return (
     <Box marginTop={15}>
       <Paper elevation={10} style={paperStyle}>
@@ -99,12 +96,6 @@ const Login = () => {
         >
           Sign in
         </Button>
-        <SnackbarNotification
-        open={snackbar.open}
-        handleClose={handleClose}
-        severity={snackbar.severity}
-        message={snackbar.message}
-      />
         <Typography>
           {" "}
           Do you have an account ?<Link to="/signup">Sign Up</Link>

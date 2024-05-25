@@ -2,11 +2,13 @@ import React from 'react';
 import { Box, Button, Typography, Paper, Grid, Divider } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../store/auth';
+import { toast } from "react-toastify";
 
 export const HostedZoneDetails = ({ hostedZone }) => {
   const { hostedZoneId } =  useParams();
   const navigate = useNavigate();
   const {AuthorizationToken} = useAuth();
+  console.log(AuthorizationToken);
   const handleDeleteHostedZone = async() => {
     try {
       const response = await fetch(`https://dns-manager-g5md.onrender.com/api/domains/delete/${hostedZoneId}`, {
@@ -17,11 +19,12 @@ export const HostedZoneDetails = ({ hostedZone }) => {
       })
       if(response.ok){
         const data = await response.json();
-        console.log(data);
         navigate('/dashboard');
+        toast.success("Deleted Zone Successfully");
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error.message);
+      toast.error(error.message);
     }
   }
   return (

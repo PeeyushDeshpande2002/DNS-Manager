@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/auth';
+import { toast } from 'react-toastify';
 
 function createData(name, type, records, HostZoneID, Comment) {
   return { name, type, records, HostZoneID, Comment };
@@ -35,17 +36,18 @@ export default function HostedZoneTable() {
             if(response.ok){
                 const data = await response.json();
                 setRows(data)
-                console.log(data);
+               // console.log(data);
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
+            toast.error(error)
         }
       }
       React.useEffect(()=>{
         getDomains();
     }, []);
     const handleClick = (row) =>{
-      console.log(row);
+      //console.log(row);
       const hostedZoneId = extractZoneId(row.Id);
       navigate( `/dashboard/${hostedZoneId}`, { state: { hostedZone: row }} )
     }

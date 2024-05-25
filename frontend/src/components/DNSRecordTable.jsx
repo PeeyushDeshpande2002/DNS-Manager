@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import EditRecordModal from '../modals/EditRecordModal';
 import {useAuth} from '../store/auth.jsx'
+import { toast } from 'react-toastify';
 
 export default function DNSRecordTable() {
     const [rows, setRows] = useState();
@@ -28,10 +29,10 @@ export default function DNSRecordTable() {
             if(response.ok){
                 const data = await response.json();
                 setRows(data)
-                console.log(data);
+                //console.log(data);
             }
         } catch (error) {
-            console.log(error);
+            toast.error(error)//console.log(error);
         }
       }
       useEffect(()=>{
@@ -58,9 +59,13 @@ export default function DNSRecordTable() {
             newRecord: recordData,
           }),
         });
+        if(response.ok){
+          toast.success('Updated the record successfully')
+        }
         getDNSRecords();
       } catch (error) {
-        console.error('Error editing record:', error);
+       // console.error('Error editing record:', error);
+        toast.error(error.message)
       }
       handleCloseEditModal();
     };
@@ -69,14 +74,16 @@ export default function DNSRecordTable() {
         const response = await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}/delete`,{
           method : 'DELETE',
           headers : {
+            Authorization : AuthorizationToken,
             'Content-Type' : 'application/json',
           },
           body : JSON.stringify(record)
         });
         getDNSRecords();
-
+        toast.success("Deleted record successfully")
       } catch (error) {
-        console.log(error);
+        //console.log(error);
+        toast.error(error.message)
       }
     }
   return ( 

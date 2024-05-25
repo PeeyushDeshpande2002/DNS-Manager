@@ -3,6 +3,7 @@ import HostedZoneTable from '../components/HostedZoneTable.jsx'
 import { Box, Button } from '@mui/material';
 import DomainModal from '../modals/CreateHostedZoneModal.jsx';
 import { useAuth } from '../store/auth.jsx';
+import { toast } from 'react-toastify';
 
 const Dashboard = ({}) => {
   const [openModal, setOpenModal] = useState();
@@ -28,10 +29,11 @@ const Dashboard = ({}) => {
       if(response.ok){
         console.log('Adding domain:', domainData);
         handleCloseModal();
-        <HostedZoneTable/>
+        toast.success('Added the domain successfully')
       }
     } catch (error) {
       console.log(error);
+      toast.error("Error while adding domain ")
     }
   };
   return (
