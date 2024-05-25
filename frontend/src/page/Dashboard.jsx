@@ -8,6 +8,28 @@ import { toast } from 'react-toastify';
 const Dashboard = ({}) => {
   const [openModal, setOpenModal] = useState();
   const {AuthorizationToken} = useAuth();
+  const [data, setData] = useState();
+  const getDomains = async () => {
+    try {
+        const response = await fetch('https://dns-manager-g5md.onrender.com/api/domains/allDomains', {
+            method : 'GET',
+            headers : {
+              Authorization : AuthorizationToken,
+            }
+        })
+        if(response.ok){
+            const data = await response.json();
+            setData(data)
+           // console.log(data);
+        }
+    } catch (error) {
+        //console.log(error);
+        toast.error(error)
+    }
+  }
+  React.useEffect(()=>{
+    getDomains();
+}, []);
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -29,7 +51,8 @@ const Dashboard = ({}) => {
       if(response.ok){
         console.log('Adding domain:', domainData);
         handleCloseModal();
-        toast.success('Added the domain successfully')
+        toast.success('Added the domain successfully');
+
       }
     } catch (error) {
       console.log(error);
@@ -46,7 +69,7 @@ const Dashboard = ({}) => {
       sx={{ backgroundColor: '#f5f5f5' }}
     >
       <Box display={'flex'}  flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
-      <HostedZoneTable/>
+      <HostedZoneTable data={data}/>
       <Button sx={{marginTop : '25px', marginBottom : '25px'}} variant="contained" color="primary" onClick={handleOpenModal}>
        Create Hosted Zone
       </Button>

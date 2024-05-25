@@ -16,36 +16,12 @@ function createData(name, type, records, HostZoneID, Comment) {
 }
 
 
-export default function HostedZoneTable() {
-
-    const [rows, setRows] = React.useState();
-    const {AuthorizationToken} = useAuth();
+export default function HostedZoneTable({ data }) {
     const extractZoneId = (id) => {
       const parts = id.split('/');
       return parts[2];
     };
     const navigate = useNavigate()
-    const getDomains = async () => {
-        try {
-            const response = await fetch('https://dns-manager-g5md.onrender.com/api/domains/allDomains', {
-                method : 'GET',
-                headers : {
-                  Authorization : AuthorizationToken,
-                }
-            })
-            if(response.ok){
-                const data = await response.json();
-                setRows(data)
-               // console.log(data);
-            }
-        } catch (error) {
-            //console.log(error);
-            toast.error(error)
-        }
-      }
-      React.useEffect(()=>{
-        getDomains();
-    }, []);
     const handleClick = (row) =>{
       //console.log(row);
       const hostedZoneId = extractZoneId(row.Id);
@@ -65,7 +41,7 @@ export default function HostedZoneTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows && rows.map((row) => (
+          {data && data.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
