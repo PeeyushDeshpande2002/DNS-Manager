@@ -11,6 +11,7 @@ const DnsRecordDashboard = () => {
   const location = useLocation();
   const { hostedZone } = location.state;
   const {AuthorizationToken} = useAuth();
+  const[data, setdata] = useState();
   // console.log(location.state);
   const [modalOpen, setModalOpen] = useState(false);
   const {hostedZoneId} = useParams();
@@ -23,9 +24,9 @@ const DnsRecordDashboard = () => {
     setModalOpen(false);
   };
 
-  const getDomains = async () => {
+  const getDNSRecords = async () => {
     try {
-        const response = await fetch('https://dns-manager-g5md.onrender.com/api/domains/allDomains', {
+        const response = await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}`, {
             method : 'GET',
             headers : {
               Authorization : AuthorizationToken,
@@ -33,15 +34,16 @@ const DnsRecordDashboard = () => {
         })
         if(response.ok){
             const data = await response.json();
+            setdata(data)
+            //console.log(data);
         }
     } catch (error) {
-        //console.log(error);
-        toast.error(error)
+        toast.error(error)//console.log(error);
     }
   }
   useEffect(()=>{
-    getDomains();
-  }, [])
+    getDNSRecords();
+}, []);
   const handleCreateRecord = async(recordData) => {
    try {
     const response = await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}/createDns`, {
@@ -55,6 +57,7 @@ const DnsRecordDashboard = () => {
     if(response.ok){
       const data = response.json();
       //console.log(data);
+      getDNSRecords();
       toast.success('Created record successfully')
     }
    } catch (error) {
@@ -67,7 +70,7 @@ const DnsRecordDashboard = () => {
     <div>
       <Box>
       <HostedZoneDetails hostedZone={hostedZone}/>
-      <DNSRecordTable/>
+      <DNSRecordTable data={data} getDNSRecords = {getDNSRecords}/>
         <Button sx={{marginTop : '25px', marginBottom : '25px'}} variant="contained" color="primary" onClick={handleOpenModal}>
         Create Record
       </Button>

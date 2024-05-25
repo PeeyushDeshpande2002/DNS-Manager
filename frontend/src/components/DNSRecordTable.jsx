@@ -12,32 +12,12 @@ import EditRecordModal from '../modals/EditRecordModal';
 import {useAuth} from '../store/auth.jsx'
 import { toast } from 'react-toastify';
 
-export default function DNSRecordTable() {
-    const [rows, setRows] = useState();
+export default function DNSRecordTable(props) {
+    
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [currentRecord, setCurrentRecord] = useState(null);
     const { hostedZoneId } = useParams();
     const {AuthorizationToken} = useAuth()
-    const getDNSRecords = async () => {
-        try {
-            const response = await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}`, {
-                method : 'GET',
-                headers : {
-                  Authorization : AuthorizationToken,
-                }
-            })
-            if(response.ok){
-                const data = await response.json();
-                setRows(data)
-                //console.log(data);
-            }
-        } catch (error) {
-            toast.error(error)//console.log(error);
-        }
-      }
-      useEffect(()=>{
-        getDNSRecords();
-    }, []);
     const handleOpenEditModal = (record) => {
       setCurrentRecord(record);
       setEditModalOpen(true);
@@ -49,7 +29,7 @@ export default function DNSRecordTable() {
     };
     const handleEditRecord = async (recordData) => {
       try {
-        await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}/update`, {
+       const response =  await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}/update`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -60,9 +40,9 @@ export default function DNSRecordTable() {
           }),
         });
         if(response.ok){
+            props.getDNSRecords()
           toast.success('Updated the record successfully')
         }
-        getDNSRecords();
       } catch (error) {
        // console.error('Error editing record:', error);
         toast.error(error.message)
@@ -79,7 +59,7 @@ export default function DNSRecordTable() {
           },
           body : JSON.stringify(record)
         });
-        getDNSRecords();
+        props.getDNSRecords();
         toast.success("Deleted record successfully")
       } catch (error) {
         //console.log(error);
@@ -99,7 +79,7 @@ export default function DNSRecordTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows && rows.map((row) => (
+          {props.data && props.data.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

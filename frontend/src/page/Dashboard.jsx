@@ -52,7 +52,7 @@ const Dashboard = ({}) => {
         console.log('Adding domain:', domainData);
         handleCloseModal();
         toast.success('Added the domain successfully');
-
+        getDomains();
       }
     } catch (error) {
       console.log(error);
