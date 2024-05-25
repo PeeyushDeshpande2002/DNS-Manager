@@ -32,6 +32,7 @@ export default function DNSRecordTable(props) {
        const response =  await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}/update`, {
           method: 'PUT',
           headers: {
+            Authorization : AuthorizationToken,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
