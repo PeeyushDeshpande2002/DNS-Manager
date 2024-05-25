@@ -9,7 +9,7 @@ export const HostedZoneDetails = ({ hostedZone }) => {
   const {AuthorizationToken} = useAuth();
   const handleDeleteHostedZone = async() => {
     try {
-      const response = await fetch(`http://localhost:5000/api/domains/delete/${hostedZoneId}`, {
+      const response = await fetch(`https://dns-manager-g5md.onrender.com/api/domains/delete/${hostedZoneId}`, {
         method : 'DELETE',
         headers : {
           Authorization : AuthorizationToken,

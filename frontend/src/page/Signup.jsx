@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Paper, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-const URL = `http://localhost:5000/api/auth/register`;
+const URL = `https://dns-manager-g5md.onrender.com/api/auth/register`;
 const Signup = () => {
   const paperStyle = {
     padding: 20,

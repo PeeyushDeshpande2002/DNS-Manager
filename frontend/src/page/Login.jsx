@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
 
-const URL = "http://localhost:5000/api/auth/login";
+const URL = "https://dns-manager-g5md.onrender.com/api/auth/login";
 const Login = () => {
   const paperStyle = {
     padding: 20,

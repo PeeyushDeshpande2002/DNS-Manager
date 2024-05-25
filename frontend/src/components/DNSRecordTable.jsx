@@ -19,7 +19,7 @@ export default function DNSRecordTable() {
     const {AuthorizationToken} = useAuth()
     const getDNSRecords = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/dns/hostedzone/${hostedZoneId}`, {
+            const response = await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}`, {
                 method : 'GET',
                 headers : {
                   Authorization : AuthorizationToken,
@@ -48,7 +48,7 @@ export default function DNSRecordTable() {
     };
     const handleEditRecord = async (recordData) => {
       try {
-        await fetch(`http://localhost:5000/api/dns/hostedzone/${hostedZoneId}/update`, {
+        await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}/update`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export default function DNSRecordTable() {
     };
     const handleDeleteRecord = async(record) => {
       try {
-        const response = await fetch(`http://localhost:5000/api/dns/hostedzone/${hostedZoneId}/delete`,{
+        const response = await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}/delete`,{
           method : 'DELETE',
           headers : {
             'Content-Type' : 'application/json',

@@ -24,7 +24,7 @@ const DnsRecordDashboard = () => {
 
   const getDomains = async () => {
     try {
-        const response = await fetch('http://localhost:5000/api/domains/allDomains', {
+        const response = await fetch('https://dns-manager-g5md.onrender.com/api/domains/allDomains', {
             method : 'GET',
             headers : {
               Authorization : AuthorizationToken,
@@ -42,7 +42,7 @@ const DnsRecordDashboard = () => {
   }, [])
   const handleCreateRecord = async(recordData) => {
    try {
-    const response = await fetch(`http://localhost:5000/api/dns/hostedzone/${hostedZoneId}/createDns`, {
+    const response = await fetch(`https://dns-manager-g5md.onrender.com/api/dns/hostedzone/${hostedZoneId}/createDns`, {
       method : 'POST',
       headers : {
         Authorization : AuthorizationToken,
