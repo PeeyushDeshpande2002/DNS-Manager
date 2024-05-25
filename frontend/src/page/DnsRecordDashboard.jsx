@@ -72,7 +72,7 @@ const DnsRecordDashboard = () => {
         handleClose={handleCloseModal}
         handleSubmit={handleCreateRecord}
       />
-     
+      
       </Box>
     </div>
   )

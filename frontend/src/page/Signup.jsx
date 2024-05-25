@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Paper, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SnackbarNotification from "../components/Snackbar";
 const URL = `https://dns-manager-g5md.onrender.com/api/auth/register`;
 const Signup = () => {
   const paperStyle = {
@@ -10,22 +11,13 @@ const Signup = () => {
     margin: "20px auto",
   };
   const btnstyle = { margin: "8px 0" };
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
-  //const {storeTokenInLS} = useAuth();
-  // const handleInput = (e) => {
-  //   const {name, value} = e.target;
-  //   setUser({
-  //     ...user,
-  //     [name]: value,
-  //   });
-  // };
-
-  // handle form on submit
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -42,28 +34,29 @@ const Signup = () => {
         }),
       });
       const res_data = await response.json();
-      console.log("res form server", res_data);
+      //console.log("res form server", res_data);
 
       if (response.ok) {
-        //storeTokenInLS(res_data.token)
+        setSnackbar({ open: true, message: 'Signed up successfully!', severity: 'success' });
         setUsername('');
         setEmail('');
         setPassword('');
         setPhone('');
         navigate("/login");
-        toast.success("Registered Successfully");
       } else {
-        toast.error(
-          res_data.errorDetails ? res_data.errorDetails : res_data.message
-        );
+        setSnackbar({ open: true, message: 'Error while signing up!', severity: 'error' });  
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
+      setSnackbar({ open: true, message: 'Error while signing up!', severity: 'error' });  
     }
+  };
+  const handleClose = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
   return (
     <div>
-      <Box>
+      <Box marginTop={15}>
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
             <h2>Sign Up</h2>
@@ -121,6 +114,12 @@ const Signup = () => {
           >
             Sign in
           </Button>
+          <SnackbarNotification
+        open={snackbar.open}
+        handleClose={handleClose}
+        severity={snackbar.severity}
+        message={snackbar.message}
+      />
         </Paper>
       </Box>
     </div>

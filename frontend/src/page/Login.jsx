@@ -12,6 +12,7 @@ import {
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
+import SnackbarNotification from "../components/Snackbar";
 
 const URL = "https://dns-manager-g5md.onrender.com/api/auth/login";
 const Login = () => {
@@ -27,7 +28,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -40,25 +41,25 @@ const Login = () => {
       });
 
       const res_data = await response.json();
-      console.log("response data", res_data);
+      //console.log("response data", res_data);
       if (response.ok) {
-        console.log(email, password);
+        //console.log(email, password);
+        setSnackbar({ open: true, message: 'Logged in successfully!', severity: 'success' });
         storeTokenInLS(res_data.token);
         setEmail('');
         setPassword('');
         navigate("/dashboard");
+
       } 
-    //   else {
-    //     toast.error(
-    //       res_data.errorDetails ? res_data.errorDetails : res_data.message
-    //     );
-    //   }
     } catch (error) {
-      console.log(error);
+      setSnackbar({ open: true, message: 'Check your email and password!', severity: 'error' });  
     }
   };
+  const handleClose = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
   return (
-    <Box>
+    <Box marginTop={15}>
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
           <h2>Sign In</h2>
@@ -98,7 +99,12 @@ const Login = () => {
         >
           Sign in
         </Button>
-        <Typography></Typography>
+        <SnackbarNotification
+        open={snackbar.open}
+        handleClose={handleClose}
+        severity={snackbar.severity}
+        message={snackbar.message}
+      />
         <Typography>
           {" "}
           Do you have an account ?<Link to="/signup">Sign Up</Link>
