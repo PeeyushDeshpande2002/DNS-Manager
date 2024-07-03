@@ -1,6 +1,3 @@
-Here's a sample README file for your DNS Manager project:
-
----
 
 # DNS Manager
 
@@ -46,14 +43,14 @@ DNS Manager is a web application designed to provide a central dashboard for aut
 
 ## Enhancements
 
-- Add filters and search options for better navigation.
-- Include graphical charts/metrics for domain and record type distribution.
-- Implement CSV or JSON bulk uploads for domain/records data.
+- Added filters and search options for better navigation.
+- Included graphical charts/metrics for domain and record type distribution.
+- Implemented CSV or JSON bulk uploads for domain/records data.
 
 ## Backend Integration
 
-- Establish API endpoints to connect the UI with AWS Route 53.
-- Implement CRUD operations for DNS records using API calls.
+- Established API endpoints to connect the UI with AWS Route 53.
+- Implemented CRUD operations for DNS records using API calls.
 
 ## User Interface
 
@@ -63,9 +60,3 @@ DNS Manager is a web application designed to provide a central dashboard for aut
 ## Resources
 
 - [AWS Route 53](https://aws.amazon.com/route53/)
-
-Create your free AWS account and get started with managing your domains and DNS records efficiently!
-
----
-
-Feel free to customize this README file further based on your specific project details and requirements.
